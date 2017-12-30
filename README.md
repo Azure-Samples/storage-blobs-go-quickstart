@@ -29,9 +29,9 @@ First, create a new general-purpose storage account to use for this quickstart.
 5. Select the **Location** to use for your storage account.
 6. Check **Pin to dashboard** and click **Create** to create your storage account. 
 
-After your storage account is created, it is pinned to the dashboard. Click on it to open it. Under **Settings**, click **Access keys**. Select the primary key and copy the associated **Connection string** to the clipboard, then paste it into a text editor for later use.
+After your storage account is created, it is pinned to the dashboard. Click on it to open it. Under **Settings**, click **Access keys**. Select the primary key and copy to the clipboard, then paste it into a text editor for later use.
 
-## Put the connection string in an environment variable
+## Put the account name and key in an environment variable
 
 This solution requires Storage account name and key to be stored in an environment variable securely on the machine running the sample. Follow one of the examples below depending on your Operating System to create the environment variable. If using Windows close out of your open IDE or shell and restart it to be able to read the environment variable.
 
@@ -52,7 +52,7 @@ At this point, you can run this application. It creates its own file to upload, 
 
 ## Run the application
 
-Navigate to your application directory and run the application with the `dotnet run` command.
+Navigate to your application directory and run the application with the `go run` command.
 
 ```
 go run storage-quickstart.go
@@ -60,7 +60,7 @@ go run storage-quickstart.go
 
 ## More information
 
-The [Azure storage documentation](https://docs.microsoft.com/azure/storage/) includes a rich set of tutorials and conceptual articles, which serve as a good complement to the samples.
+The [Azure storage documentation](https://docs.microsoft.com/azure/storage/) includes a rich set of tutorials and conceptual articles, which serve as a good complement to the samples. For more samples on the Azure Storage SDK for GO, check out the examples [here](https://github.com/Azure/azure-storage-blob-go/blob/master/2016-05-31/azblob/zt_examples_test.go).
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
