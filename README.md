@@ -1,57 +1,67 @@
-# Project Name
+---
+services: storage
+platforms: go
+author: seguler
+---
 
-(short, 1-3 sentenced, description of the project)
+# Transfer objects to and from Azure Blob storage using Go
 
-## Features
+This repository contains a simple sample project to help you getting started with Azure storage using Go as the development language.
 
-This project framework provides the following features:
+## Prerequisites
 
-* Feature 1
-* Feature 2
-* ...
+To complete this tutorial:
 
-## Getting Started
+* Install [Go](https://golang.org/dl/) 1.8 or later 
 
-### Prerequisites
+If you don't have an Azure subscription, create a [free account](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) before you begin.
 
-(ideally very short, if any)
+## Create a storage account using the Azure portal
 
-- OS
-- Library version
-- ...
+First, create a new general-purpose storage account to use for this quickstart.
 
-### Installation
+1. Go to the [Azure portal](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) account creation menu and log in using your Azure account. 
+2. Enter a unique name for your storage account. Keep these rules in mind for naming your storage account:
+    - The name must be between 3 and 24 characters in length.
+    - The name may contain numbers and lowercase letters only.
+3. Select your subscription. 
+4. For **Resource group**, create a new one or use an existing resource group. 
+5. Select the **Location** to use for your storage account.
+6. Check **Pin to dashboard** and click **Create** to create your storage account. 
 
-(ideally very short)
+After your storage account is created, it is pinned to the dashboard. Click on it to open it. Under **Settings**, click **Access keys**. Select the primary key and copy the associated **Connection string** to the clipboard, then paste it into a text editor for later use.
 
-- npm install [package name]
-- mvn install
-- ...
+## Put the connection string in an environment variable
 
-### Quickstart
-(Add steps to get up and running quickly)
+This solution requires Storage account name and key to be stored in an environment variable securely on the machine running the sample. Follow one of the examples below depending on your Operating System to create the environment variable. If using Windows close out of your open IDE or shell and restart it to be able to read the environment variable.
 
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
+### Linux
 
+```bash
+export AZURE_STORAGE_ACCOUNT_NAME="<youraccountname>"
+export AZURE_STORAGE_ACCOUNT_KEY="<youraccountkey>"
+```
+### Windows
 
-## Demo
+```cmd
+setx AZURE_STORAGE_ACCOUNT_NAME "<yourconnectionstring>"
+setx AZURE_STORAGE_ACCOUNT_KEY "<youraccountkey>"
+```
 
-A demo app is included to show how to use the project.
+At this point, you can run this application. It creates its own file to upload, and then cleans up after itself by deleting everything at the end.
 
-To run the demo, follow these steps:
+## Run the application
 
-(Add steps to start up the demo)
+Navigate to your application directory and run the application with the `dotnet run` command.
 
-1.
-2.
-3.
+```
+go run storage-quickstart.go
+```
 
-## Resources
+## More information
 
-(Any additional resources or related projects)
+The [Azure storage documentation](https://docs.microsoft.com/azure/storage/) includes a rich set of tutorials and conceptual articles, which serve as a good complement to the samples.
 
-- Link to supporting information
-- Link to similar sample
-- ...
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
