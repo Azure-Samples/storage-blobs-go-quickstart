@@ -38,14 +38,20 @@ This solution requires Storage account name and key to be stored in an environme
 ### Linux
 
 ```bash
-export AZURE_STORAGE_ACCOUNT_NAME="<youraccountname>"
-export AZURE_STORAGE_ACCOUNT_KEY="<youraccountkey>"
+export AZURE_STORAGE_ACCOUNT="<youraccountname>"
+export AZURE_STORAGE_ACCESS_KEY="<youraccountkey>"
 ```
 ### Windows
 
 ```cmd
-setx AZURE_STORAGE_ACCOUNT_NAME "<yourconnectionstring>"
-setx AZURE_STORAGE_ACCOUNT_KEY "<youraccountkey>"
+setx AZURE_STORAGE_ACCOUNT "<yourconnectionstring>"
+setx AZURE_STORAGE_ACCESS_KEY "<youraccountkey>"
+```
+
+## Download and Install the Azure Storage Blob SDK for Go
+
+```
+go get -u github.com/azure/azure-storage-blob-go/2016-05-31/azblob
 ```
 
 At this point, you can run this application. It creates its own file to upload, and then cleans up after itself by deleting everything at the end.
