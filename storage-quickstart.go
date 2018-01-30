@@ -99,6 +99,7 @@ func main() {
 	// Note that PutBlob can upload up to 256MB data in one shot. Details: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
 	fmt.Printf("Uploading the file with blob name: %s\n", fileName)
 	_, err = blobURL.PutBlob(ctx, file, azblob.BlobHTTPHeaders{}, azblob.Metadata{}, azblob.BlobAccessConditions{})
+	handleErrors(err)
 
 	// Alternatively you can use the high level API UploadFileToBlockBlob function to upload blocks in parallel.
 	// This function calls PutBlock/PutBlockLlist for files larger 256 MBs, and calls PutBlob for any file smaller
@@ -137,7 +138,8 @@ func main() {
 		})
 	downloadedData := &bytes.Buffer{}
 	downloadedData.ReadFrom(responseBody)
-	// The downloaded blob data is in downloadData's buffer
+	// The downloaded blob data is in downloadData's buffer. :Let's print it
+	fmt.Printf("Downloaded the blob: " + downloadedData.String())
 
 	// Cleaning up the quick start by deleting the container and the file created locally
 	fmt.Printf("Press a key to delete the sample files, example container, and exit the application.\n")
