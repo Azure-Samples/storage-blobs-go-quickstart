@@ -33,7 +33,7 @@ After your storage account is created, it is pinned to the dashboard. Click on i
 
 ## Put the account name and key in environment variables
 
-This solution requires Storage account name and key to be stored in environment variables securely on the machine running the sample. Follow one of the examples below depending on your Operating System to create the environment variables. If using Windows, close out of your open IDE or shell and restart to ensure that the environment variables are initialized.
+This solution requires your storage account name and key to be stored in environment variables securely on the machine running the sample. Follow one of the examples below depending on your operating System to create the environment variables. If using Windows, close out of your open IDE or shell and restart to ensure that the environment variables are initialized.
 
 ### Linux
 
@@ -59,7 +59,7 @@ At this point, you can run this application. It creates its own file to upload, 
 
 ## Run the application
 
-Create a directory within your GOPATH's SRC directory for theis quick-start package, go into this directory and place the code for this quick start in a storage-quickstart.go file. Then build and run this package using the `go run` command.
+Navigate to your application directory and run the application with the go run command.
 
 ```
 go run storage-quickstart.go
