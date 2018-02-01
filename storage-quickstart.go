@@ -128,7 +128,7 @@ func main() {
 	fmt.Printf("Downloaded the blob: " + downloadedData.String())
 
 	// Cleaning up the quick start by deleting the container and the file created locally
-	fmt.Printf("Press a key to delete the sample files, example container, and exit the application.\n")
+	fmt.Printf("Press enter key to delete the sample files, example container, and exit the application.\n")
 	bufio.NewReader(os.Stdin).ReadBytes('\n')
 	fmt.Printf("Cleaning up.\n")
 	containerURL.Delete(ctx, azblob.ContainerAccessConditions{})
