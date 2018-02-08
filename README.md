@@ -29,7 +29,7 @@ First, create a new general-purpose storage account to use for this quickstart.
 5. Select the **Location** to use for your storage account.
 6. Check **Pin to dashboard** and click **Create** to create your storage account. 
 
-After your storage account is created, it is pinned to the dashboard. Click on it to open it. Under **Settings**, click **Access keys**. Select the primary key and copy to the clipboard, then paste it into a text editor for later use.
+After your storage account is created, it's pinned to the dashboard. Select it to open it. Under Settings, select **Access keys**. Copy and paste the Storage account name and the Key under **key1** into a text editor for later use.
 
 ## Put the account name and key in environment variables
 
