@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Azure/azure-storage-blob-go/2016-05-31/azblob"
+	"github.com/Azure/azure-storage-blob-go/azblob"
 )
 
 // Azure Storage Quickstart Sample - Demonstrate how to upload, list, download, and delete blobs.
@@ -55,7 +55,10 @@ func main() {
 	}
 
 	// Create a default request pipeline using your storage account name and account key.
-	credential := azblob.NewSharedKeyCredential(accountName, accountKey)
+	credential, err := azblob.NewSharedKeyCredential(accountName, accountKey)
+	if err != nil {
+		log.Fatal("Invalid credentials with error: " + err.Error())
+	}
 	p := azblob.NewPipeline(credential, azblob.PipelineOptions{})
 
 	// Create a random string for the quick start container
@@ -72,12 +75,12 @@ func main() {
 	// Create the container
 	fmt.Printf("Creating a container named %s\n", containerName)
 	ctx := context.Background() // This example uses a never-expiring context
-	_, err := containerURL.Create(ctx, azblob.Metadata{}, azblob.PublicAccessNone)
+	_, err = containerURL.Create(ctx, azblob.Metadata{}, azblob.PublicAccessNone)
 	handleErrors(err)
 
 	// Create a file to test the upload and download.
 	fmt.Printf("Creating a dummy file to test the upload and download\n")
-	data := []byte("hello world\nthis is a blob\n")
+	data := []byte("hello world this is a blob\n")
 	fileName := randomString()
 	err = ioutil.WriteFile(fileName, data, 0700)
 	handleErrors(err)
@@ -101,10 +104,11 @@ func main() {
 		Parallelism: 16})
 	handleErrors(err)
 
-	// List the blobs in the container
+	// List the container that we have created above
+	fmt.Println("Listing the blobs in the container:")
 	for marker := (azblob.Marker{}); marker.NotDone(); {
 		// Get a result segment starting with the blob indicated by the current Marker.
-		listBlob, err := containerURL.ListBlobs(ctx, marker, azblob.ListBlobsOptions{})
+		listBlob, err := containerURL.ListBlobsFlatSegment(ctx, marker, azblob.ListBlobsSegmentOptions{})
 		handleErrors(err)
 
 		// ListBlobs returns the start of the next segment; you MUST use this to get
@@ -112,16 +116,20 @@ func main() {
 		marker = listBlob.NextMarker
 
 		// Process the blobs returned in this result segment (if the segment is empty, the loop body won't execute)
-		for _, blobInfo := range listBlob.Blobs.Blob {
-			fmt.Print("Blob name: " + blobInfo.Name + "\n")
+		for _, blobInfo := range listBlob.Segment.BlobItems {
+			fmt.Print("	Blob name: " + blobInfo.Name + "\n")
 		}
 	}
 
-	// Here's how to download the blob. NOTE: This method automatically retries if the connection fails
-	// during download (the low-level GetBlob function does NOT retry errors when reading from its stream).
-	stream := azblob.NewDownloadStream(ctx, blobURL.GetBlob, azblob.DownloadStreamOptions{})
-	downloadedData := &bytes.Buffer{}
-	_, err = downloadedData.ReadFrom(stream)
+	// Here's how to download the blob
+	downloadResponse, err := blobURL.Download(ctx, 0, azblob.CountToEnd, azblob.BlobAccessConditions{}, false)
+
+	// NOTE: automatically retries are performed if the connection fails
+	bodyStream := downloadResponse.Body(azblob.RetryReaderOptions{MaxRetryRequests: 20})
+
+	// read the body into a buffer
+	downloadedData := bytes.Buffer{}
+	_, err = downloadedData.ReadFrom(bodyStream)
 	handleErrors(err)
 
 	// The downloaded blob data is in downloadData's buffer. :Let's print it
