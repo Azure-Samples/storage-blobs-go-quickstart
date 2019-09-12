@@ -1,7 +1,11 @@
 ---
-services: storage
-platforms: go
-author: seguler
+page_type: sample
+languages:
+- go
+products:
+- azure
+description: "This repository contains a simple sample project to help you getting started with Azure storage using Go as the development language."
+urlFragment: storage-blobs-go-quickstart
 ---
 
 # Transfer objects to and from Azure Blob storage using Go
