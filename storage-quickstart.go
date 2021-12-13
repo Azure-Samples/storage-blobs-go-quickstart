@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
 	"strconv"
 	"time"
 
@@ -59,7 +61,7 @@ func main() {
 	fmt.Printf("Creating a dummy file to test the upload and download\n")
 
 	data := []byte("\nhello world this is a blob\n")
-	blobName := "blob" + "-" + randomString()
+	blobName := "quickstartblob" + "-" + randomString()
 
 	var blockOptions azblob.HighLevelUploadToBlockBlobOption
 
@@ -110,6 +112,10 @@ func main() {
 	}
 
 	fmt.Println(downloadedData.String())
+
+	fmt.Printf("Press enter key to delete the blob fils, example container, and exit the application.\n")
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
+	fmt.Printf("Cleaning up.\n")
 
 	// Delete the blob
 	fmt.Printf("Deleting the blob " + blobName + "\n")
