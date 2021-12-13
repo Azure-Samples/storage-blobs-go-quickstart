@@ -24,7 +24,7 @@ If you don't have an Azure subscription, create a [free account](https://portal.
 
 First, create a new general-purpose storage account to use for this quickstart.
 
-1. Go to the [Azure portal](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) account creation menu and log in using your Azure account. 
+1. Go to the [Azure portal](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) account creation menu and log in using your Azure account.
 2. Enter a unique name for your storage account. Keep these rules in mind for naming your storage account:
     - The name must be between 3 and 24 characters in length.
     - The name may contain numbers and lowercase letters only.
@@ -35,21 +35,14 @@ First, create a new general-purpose storage account to use for this quickstart.
 
 After your storage account is created, it's pinned to the dashboard. Select it to open it. Under Settings, select **Access keys**. Copy and paste the Storage account name and the Key under **key1** into a text editor for later use.
 
-## Put the account name and key in environment variables
+## Sign in with Azure CLI
 
-This solution requires your storage account name and key to be stored in environment variables securely on the machine running the sample. Follow one of the examples below depending on your operating System to create the environment variables. If using Windows, close out of your open IDE or shell and restart to ensure that the environment variables are initialized.
+To support local development, the `DefaultAzureCredential` can authenticate as the user signed into the Azure CLI.
 
-### Linux
+Run the following command to sign into the Azure CLI.
 
-```bash
-export AZURE_STORAGE_ACCOUNT="<youraccountname>"
-export AZURE_STORAGE_ACCESS_KEY="<youraccountkey>"
-```
-### Windows
-
-```powershell
-$env:AZURE_STORAGE_ACCOUNT="<youracountname>"
-$env:AZURE_STORAGE_ACCESS_KEY="<youraccountkey>"
+```azurecli
+az login
 ```
 
 ## Download and Install the Azure Storage Blob SDK for Go
@@ -62,7 +55,7 @@ go get github.com/Azure/azure-sdk-for-go/sdk/azidentity
 go get github.com/Azure/azure-sdk-for-go/sdk/storage/azblob
 ```
 
-At this point, you can run this application. It creates its own file to upload, and then cleans up after itself by deleting everything at the end.
+At this point, you can run this application. It creates an Azure storage container and blob object then cleans up after itself by deleting everything at the end.
 
 ## Run the application
 
