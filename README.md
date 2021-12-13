@@ -59,7 +59,11 @@ At this point, you can run this application. It creates an Azure storage contain
 
 ## Run the application
 
-Navigate to your application directory and run the application with the go run command.
+Open the `storage-quickstart.go` file.
+
+Replace `<StorageAccountName>` with the name of your Azure storage account.
+
+Run the application with the `go run` command:
 
 ```bash
 go run storage-quickstart.go

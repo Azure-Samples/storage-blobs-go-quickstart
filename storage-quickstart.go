@@ -34,8 +34,7 @@ func randomString() string {
 func main() {
 	fmt.Printf("Azure Blob storage quick start sample\n")
 
-	// Replace `<StorageAccountName` with your storage account
-	url := "https://storageblobsgo.blob.core.windows.net/" //replace with <StorageAccountName>
+	url := "https://<StorageAccountName>.blob.core.windows.net/" //replace <StorageAccountName> with your Azure storage account name
 	ctx := context.Background()
 
 	// Create a default request pipeline using your storage account name and account key.
@@ -63,15 +62,13 @@ func main() {
 	data := []byte("\nhello world this is a blob\n")
 	blobName := "quickstartblob" + "-" + randomString()
 
-	var blockOptions azblob.HighLevelUploadToBlockBlobOption
-
 	blobClient, err := azblob.NewBlockBlobClient(url+containerName+"/"+blobName, credential, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Upload to data to blob storage
-	_, err = blobClient.UploadBufferToBlockBlob(ctx, data, blockOptions)
+	_, err = blobClient.UploadBufferToBlockBlob(ctx, data, azblob.HighLevelUploadToBlockBlobOption{})
 
 	if err != nil {
 		log.Fatalf("Failure to upload to blob: %+v", err)
