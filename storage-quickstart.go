@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"math/rand"
@@ -11,7 +12,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
 )
 
@@ -34,16 +34,25 @@ func randomString() string {
 func main() {
 	fmt.Printf("Azure Blob storage quick start sample\n")
 
-	url := "https://<StorageAccountName>.blob.core.windows.net/" //replace <StorageAccountName> with your Azure storage account name
+	accountName, ok := os.LookupEnv("AZURE_STORAGE_ACCOUNT_NAME")
+	if !ok {
+		panic(errors.New("AZURE_STORAGE_ACCOUNT_NAME could not be found"))
+	}
+	accountKey, ok := os.LookupEnv("AZURE_STORAGE_ACCOUNT_KEY")
+	if !ok {
+		panic(errors.New("AZURE_STORAGE_ACCOUNT_KEY could not be found"))
+	}
+
+	url := fmt.Sprintf("https://%s.blob.core.windows.net/", accountName)
 	ctx := context.Background()
 
 	// Create a default request pipeline using your storage account name and account key.
-	credential, err := azidentity.NewDefaultAzureCredential(nil)
+	credential, err := azblob.NewSharedKeyCredential(accountName, accountKey)
 	if err != nil {
 		log.Fatal("Invalid credentials with error: " + err.Error())
 	}
 
-	serviceClient, err := azblob.NewServiceClient(url, credential, nil)
+	serviceClient, err := azblob.NewServiceClientWithSharedKey(url, credential, nil)
 	if err != nil {
 		log.Fatal("Invalid credentials with error: " + err.Error())
 	}
@@ -62,10 +71,7 @@ func main() {
 	data := []byte("\nhello world this is a blob\n")
 	blobName := "quickstartblob" + "-" + randomString()
 
-	blobClient, err := azblob.NewBlockBlobClient(url+containerName+"/"+blobName, credential, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	blobClient := containerClient.NewBlockBlobClient(url + containerName + "/" + blobName)
 
 	// Upload to data to blob storage
 	_, err = blobClient.UploadBufferToBlockBlob(ctx, data, azblob.HighLevelUploadToBlockBlobOption{})

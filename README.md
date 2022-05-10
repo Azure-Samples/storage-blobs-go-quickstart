@@ -35,14 +35,15 @@ First, create a new general-purpose storage account to use for this quickstart.
 
 After your storage account is created, it's pinned to the dashboard. Select it to open it. Under Settings, select **Access keys**. Copy and paste the Storage account name and the Key under **key1** into a text editor for later use.
 
-## Sign in with Azure CLI
+## Populate Environment with Access Keys
 
-To support local development, the `DefaultAzureCredential` can authenticate as the user signed into the Azure CLI.
+> Note that in this step security credentials are handled that must be threaded carefully just like username/passwords
 
-Run the following command to sign into the Azure CLI.
+The application will fetch it's ***Access key*** from the environment. Export the strings you have copied in the last step:
 
-```azurecli
-az login
+```
+export AZURE_STORAGE_ACCOUNT_NAME="<your_account_name>"
+export AZURE_STORAGE_ACCOUNT_KEY="<your_secret_key>"
 ```
 
 ## Download and Install the Azure Storage Blob SDK for Go
@@ -50,8 +51,6 @@ az login
 From your GOPATH, execute the following command:
 
 ```bash
-go get github.com/Azure/azure-sdk-for-go/sdk/azidentity
-
 go get github.com/Azure/azure-sdk-for-go/sdk/storage/azblob
 ```
 
