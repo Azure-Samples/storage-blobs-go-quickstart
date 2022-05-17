@@ -16,7 +16,7 @@ This repository contains a simple sample project to help you getting started wit
 
 To complete this tutorial:
 
-* Install [Go](https://golang.org/dl/) 1.17.3 or later
+* Install [Go](https://golang.org/dl/) 1.8 or later
 
 If you don't have an Azure subscription, create a [free account](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) before you begin.
 
@@ -24,16 +24,28 @@ If you don't have an Azure subscription, create a [free account](https://portal.
 
 First, create a new general-purpose storage account to use for this quickstart.
 
-1. Go to the [Azure portal](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) account creation menu and log in using your Azure account.
+1. Go to the [Azure portal](https://portal.azure.com/#create/Microsoft.StorageAccount-ARM) create a storage account menu.
 2. Enter a unique name for your storage account. Keep these rules in mind for naming your storage account:
     - The name must be between 3 and 24 characters in length.
     - The name may contain numbers and lowercase letters only.
 3. Select your subscription.
 4. For **Resource group**, create a new one or use an existing resource group.
 5. Select the **Location** to use for your storage account.
-6. Check **Pin to dashboard** and click **Create** to create your storage account.
+6. Click **Create** to create your storage account.
 
-After your storage account is created, it's pinned to the dashboard. Select it to open it. Under Settings, select **Access keys**. Copy and paste the Storage account name and the Key under **key1** into a text editor for later use.
+## Assign RBAC permissions to the storage account
+
+Azure storage accounts require explicit permissions to perform read and write operations. In order to use the storage account, you must assign permissions to the account. To do that you'll need to assing an appropriate RBAC role to your account. To get the `objectID` of the currently signed in user, run `az ad signed-in-user show --query objectId`.
+
+Run the following AzureCli command to assign the storage account permissions:
+
+```azurecli
+az role assignment create --assignee "<ObjectID>" --role "Storage Blob Data Contributor" --scope "<StorageAccountResourceID>"
+```
+
+Learn more about Azure's built-in RBAC roles, click [here](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles).
+
+> Note: Azure Cli has built in helper fucntions that retrieve the storage access keys when permissions are not detected. That functionally does not transfer to the DefaultAzureCredential, which is the reason for assiging RBAC roles to your account.
 
 ## Sign in with Azure CLI
 
