@@ -33,6 +33,16 @@ First, create a new general-purpose storage account to use for this quickstart.
 5. Select the **Location** to use for your storage account.
 6. Click **Create** to create your storage account.
 
+## Sign in with Azure CLI
+
+To support local development, the `DefaultAzureCredential` can authenticate as the user signed into the Azure CLI.
+
+Run the following command to sign into the Azure CLI.
+
+```azurecli
+az login
+```
+
 ## Assign RBAC permissions to the storage account
 
 Azure storage accounts require explicit permissions to perform read and write operations. In order to use the storage account, you must assign permissions to the account. To do that you'll need to assing an appropriate RBAC role to your account. To get the `objectID` of the currently signed in user, run `az ad signed-in-user show --query objectId`.
@@ -46,16 +56,6 @@ az role assignment create --assignee "<ObjectID>" --role "Storage Blob Data Cont
 Learn more about Azure's built-in RBAC roles, click [here](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles).
 
 > Note: Azure Cli has built in helper fucntions that retrieve the storage access keys when permissions are not detected. That functionally does not transfer to the DefaultAzureCredential, which is the reason for assiging RBAC roles to your account.
-
-## Sign in with Azure CLI
-
-To support local development, the `DefaultAzureCredential` can authenticate as the user signed into the Azure CLI.
-
-Run the following command to sign into the Azure CLI.
-
-```azurecli
-az login
-```
 
 ## Download and Install the Azure Storage Blob SDK for Go
 
