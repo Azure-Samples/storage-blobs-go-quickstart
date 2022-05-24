@@ -33,14 +33,15 @@ First, create a new general-purpose storage account to use for this quickstart.
 5. Select the **Location** to use for your storage account.
 6. Click **Create** to create your storage account.
 
-## Sign in with Azure CLI
+## Populate Environment with Access Keys
 
-To support local development, the `DefaultAzureCredential` can authenticate as the user signed into the Azure CLI.
+> Note that in this step security credentials are handled that must be threaded carefully just like username/passwords
 
-Run the following command to sign into the Azure CLI.
+The application will fetch it's ***Access key*** from the environment. Export the strings you have copied in the last step:
 
-```azurecli
-az login
+```
+export AZURE_STORAGE_ACCOUNT_NAME="<your_account_name>"
+export AZURE_STORAGE_ACCOUNT_KEY="<your_secret_key>"
 ```
 
 ## Assign RBAC permissions to the storage account
@@ -62,8 +63,6 @@ Learn more about Azure's built-in RBAC roles, click [here](https://docs.microsof
 From your GOPATH, execute the following command:
 
 ```bash
-go get github.com/Azure/azure-sdk-for-go/sdk/azidentity
-
 go get github.com/Azure/azure-sdk-for-go/sdk/storage/azblob
 ```
 
