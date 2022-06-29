@@ -110,7 +110,7 @@ func main() {
 
 	fmt.Println(downloadedData.String())
 
-	fmt.Printf("Press enter key to delete the blob fils, example container, and exit the application.\n")
+	fmt.Printf("Press enter key to delete the blob files, example container, and exit the application.\n")
 	bufio.NewReader(os.Stdin).ReadBytes('\n')
 	fmt.Printf("Cleaning up.\n")
 
