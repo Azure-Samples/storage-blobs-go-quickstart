@@ -43,29 +43,24 @@ func main() {
 	client, err := azblob.NewClient(url, credential, nil)
 	handleError(err)
 
-	serviceClient := client.ServiceClient()
-
 	// Create the container
 	containerName := "quickstart-sample-container"
 	fmt.Printf("Creating a container named %s\n", containerName)
-	containerClient := serviceClient.NewContainerClient(containerName)
-	_, err = containerClient.Create(ctx, nil)
+	_, err = client.CreateContainer(ctx, containerName, nil)
 	handleError(err)
 
 	data := []byte("\nHello, world! This is a blob.\n")
 	blobName := "sample-blob"
 
-	blobClient := containerClient.NewBlockBlobClient(blobName)
-
 	// Upload to data to blob storage
 	fmt.Printf("Uploading a blob named %s\n", blobName)
-	_, err = blobClient.UploadBuffer(ctx, data, &azblob.UploadBufferOptions{})
+	_, err = client.UploadBuffer(ctx, containerName, blobName, data, &azblob.UploadBufferOptions{})
 	handleError(err)
 
 	// List the blobs in the container
 	fmt.Println("Listing the blobs in the container:")
 
-	pager := containerClient.NewListBlobsFlatPager(&container.ListBlobsFlatOptions{
+	pager := client.NewListBlobsFlatPager(containerName, &container.ListBlobsFlatOptions{
 		Include: container.ListBlobsInclude{Snapshots: true, Versions: true},
 	})
 
@@ -79,15 +74,15 @@ func main() {
 	}
 
 	// Download the blob
-	get, err := blobClient.DownloadStream(ctx, nil)
+	get, err := client.DownloadStream(ctx, containerName, blobName, nil)
 	handleError(err)
 
 	downloadedData := bytes.Buffer{}
-	reader := get.Body
-	_, err = downloadedData.ReadFrom(reader)
+	retryReader := get.NewRetryReader(ctx, &azblob.RetryReaderOptions{})
+	_, err = downloadedData.ReadFrom(retryReader)
 	handleError(err)
 
-	err = reader.Close()
+	err = retryReader.Close()
 	handleError(err)
 
 	// Print the content of the blob we created
@@ -101,11 +96,11 @@ func main() {
 	// Delete the blob
 	fmt.Printf("Deleting the blob " + blobName + "\n")
 
-	_, err = blobClient.Delete(ctx, nil)
+	_, err = client.DeleteBlob(ctx, containerName, blobName, nil)
 	handleError(err)
 
 	// Delete the container
 	fmt.Printf("Deleting the container " + containerName + "\n")
-	_, err = containerClient.Delete(ctx, nil)
+	_, err = client.DeleteContainer(ctx, containerName, nil)
 	handleError(err)
 }
