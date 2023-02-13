@@ -10,7 +10,6 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
-	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/container"
 )
 
 // Azure Storage Quickstart Sample - Demonstrate how to upload, list, download, and delete blobs.
@@ -60,8 +59,8 @@ func main() {
 	// List the blobs in the container
 	fmt.Println("Listing the blobs in the container:")
 
-	pager := client.NewListBlobsFlatPager(containerName, &container.ListBlobsFlatOptions{
-		Include: container.ListBlobsInclude{Snapshots: true, Versions: true},
+	pager := client.NewListBlobsFlatPager(containerName, &azblob.ListBlobsFlatOptions{
+		Include: azblob.ListBlobsInclude{Snapshots: true, Versions: true},
 	})
 
 	for pager.More() {
