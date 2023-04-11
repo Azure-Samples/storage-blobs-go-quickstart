@@ -55,7 +55,7 @@ az role assignment create --assignee "<ObjectID>" --role "Storage Blob Data Cont
 
 Learn more about Azure's built-in RBAC roles, click [here](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles).
 
-> Note: Azure Cli has built in helper fucntions that retrieve the storage access keys when permissions are not detected. That functionally does not transfer to the DefaultAzureCredential, which is the reason for assiging RBAC roles to your account.
+> Note: Azure Cli has built in helper functions that retrieve the storage access keys when permissions are not detected. That functionally does not transfer to the DefaultAzureCredential, which is the reason for assiging RBAC roles to your account.
 
 ## Download and Install the Azure Storage Blob SDK for Go
 
